@@ -36,6 +36,12 @@ describe("deterministicPartitionKey", () => {
       const trivialKey = deterministicPartitionKey({ anotherKey });
       expect(trivialKey).toBe(hashAndHexValue(JSON.stringify({ anotherKey })));
     });
+
+    it("should return the event object stringfied and hashed for large objects", () => {
+      const anotherKey = createString(10000);
+      const trivialKey = deterministicPartitionKey({ anotherKey });
+      expect(trivialKey).toBe(hashAndHexValue(JSON.stringify({ anotherKey })));
+    });
   });
 });
 
