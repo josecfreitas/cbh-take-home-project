@@ -17,13 +17,13 @@ exports.deterministicPartitionKey = (event) => {
 
   // handle objects containing partitionKey field
   // use constant over let to make it clear that this value is not going to change
-  const candidate = typeof event.partitionKey === "string"
+  const partitionKey = typeof event.partitionKey === "string"
     ? event.partitionKey
     : JSON.stringify(event.partitionKey);
 
-  if (candidate.length > MAX_PARTITION_KEY_LENGTH) {
-    return crypto.createHash("sha3-512").update(candidate).digest("hex");
+  if (partitionKey.length > MAX_PARTITION_KEY_LENGTH) {
+    return crypto.createHash("sha3-512").update(partitionKey).digest("hex");
   }
 
-  return candidate;
+  return partitionKey;
 };
